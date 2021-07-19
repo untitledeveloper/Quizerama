@@ -39,6 +39,23 @@ h3 {
     margin: 30px;
 }
 
+.scoreboard_list {
+    text-align: center;
+}
+
+.layout_index {
+    text-align: center;
+}
+
+.button_custom {
+    margin: 10px;
+}
+
+.button {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
 label {
     margin: 40px;
 }

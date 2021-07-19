@@ -1,7 +1,7 @@
 var position = 0;
 var correct = 0;
 var time = 30;
-var quiz, status, question, choice, choices, chA, chB, chC, chD, timeId, timeIt, submitId, score, input;
+var quiz, status, question, choice, choices, chA, chB, chC, chD, timeId, timeIt, submitId, score, input, players, local_players;
 
 var questions = [
     {
@@ -64,11 +64,14 @@ function countdown() {
 submitId = get('submit');
 
 function scoreboard(score) {
+  input = get('text_input').value;
+  local_players = localStorage.getItem("local_players");
+  local_players = local_players ? JSON.parse(local_players) : {};
+  local_players[input] = score;
+  localStorage.setItem("local_players", JSON.stringify(local_players));
   submitId.innerHTML = "<h3>Added to leaderboard</h3>"
   submitId.innerHTML += "<a class='button' href='scoreboard.html'>Leaderboard</a>"
   submitId.innerHTML += "<a class='button' href='index.html'>Home</a>"
-  input = document.getElementById('input_name').value;
-  localStorage.setItem("name", input);
 }
 
 function submit(score) {
@@ -76,8 +79,9 @@ function submit(score) {
 
   submitId.innerHTML = "<h3>Add score to leaderboard</h3>"
   submitId.innerHTML += "<h3>Score: "+score+"</h3"
-  submitId.innerHTML += "<input class='input' id='input_name' type='text' placeholder='Type name'>"
+  submitId.innerHTML += "<input class='input' id='text_input' type='text' placeholder='Type name'>"
   submitId.innerHTML += "<button class='button' onclick='scoreboard("+score+")'>Submit</button>"
+
 }
 
 function renderQuestion(){
