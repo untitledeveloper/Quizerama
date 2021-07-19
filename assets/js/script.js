@@ -1,8 +1,7 @@
 var position = 0;
 var correct = 0;
-var score = 0;
 var time = 30;
-var quiz, status, question, choice, choices, chA, chB, chC, chD;
+var quiz, status, question, choice, choices, chA, chB, chC, chD, timeId, timeIt, submitId, score, input;
 
 var questions = [
     {
@@ -39,38 +38,82 @@ var questions = [
       }
     ]
 
-var elem = document.getElementById('timer');
-var timerId = setInterval(countdown, 1000);
+
+function get(x){
+  return document.getElementById(x);
+}
+
+timeId = get('timer');
+timeIt = setInterval(countdown, 1000);
 
 function countdown() {
-    if (time == -1) {
-    clearTimeout(timerId);
-    elem.innerHTML = 'Timeout';
+
+  if (time == 0) {
+    clearTimeout(timeIt);
+    timeId.innerHTML = 'Timeout';
     console.log("Timeout")
     checkAnswer('fail')
     } 
     
     else {
-    elem.innerHTML = 'Time: '+time;
+    timeId.innerHTML = 'Time: ' + time;
     time--;
     }
 }
 
-function get(x){
-    return document.getElementById(x);
-  }
+submitId = get('submit');
 
+function scoreboard(score) {
+  submitId.innerHTML = "<h3>Added to leaderboard</h3>"
+  submitId.innerHTML += "<a class='button' href='scoreboard.html'>Leaderboard</a>"
+  submitId.innerHTML += "<a class='button' href='index.html'>Home</a>"
+  input = document.getElementById('input_name').value;
+  localStorage.setItem("name", input);
+}
+
+function submit(score) {
+  console.log('submit func')
+
+  submitId.innerHTML = "<h3>Add score to leaderboard</h3>"
+  submitId.innerHTML += "<h3>Score: "+score+"</h3"
+  submitId.innerHTML += "<input class='input' id='input_name' type='text' placeholder='Type name'>"
+  submitId.innerHTML += "<button class='button' onclick='scoreboard("+score+")'>Submit</button>"
+}
 
 function renderQuestion(){
     quiz = get("quiz");
-    if(position >= questions.length){
+
+    if(position >= questions.length & correct == 0){
       quiz.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
       get("status").innerHTML = "Quiz completed";
       
       position = 0;
       correct = 0;
+      time = 0;
+      score = time;
 
-      return false;
+      localStorage.setItem("score", score);
+      console.log("saved score to local storage: " + score)
+      clearTimeout(timeIt);
+      timeId.innerHTML = 'Timeout'
+
+      return submit(score);
+    }
+
+    else if(position >= questions.length){
+      quiz.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+      get("status").innerHTML = "Quiz completed";
+      
+      position = 0;
+      correct = 0;
+      score = time;
+
+      localStorage.setItem("score", score);
+      console.log("saved score to local storage: " + score)
+      clearTimeout(timeIt);
+      timeId.innerHTML = 'Timeout'
+
+      return submit(score);
     }
     get("status").innerHTML = "Question "+(position+1)+" of "+questions.length;
     
@@ -80,13 +123,13 @@ function renderQuestion(){
     chC = questions[position].c;
     chD = questions[position].d;
 
-    quiz.innerHTML = "<h3>"+question+"</h3>";
+    quiz.innerHTML = "<h3 class='question_style'>"+question+"</h3>";
     
     quiz.innerHTML += "<label> <input type='radio' name='choices' value='a'> "+chA+"</label>";
     quiz.innerHTML += "<label> <input type='radio' name='choices' value='b'> "+chB+"</label>";
     quiz.innerHTML += "<label> <input type='radio' name='choices' value='c'> "+chC+"</label>";
     quiz.innerHTML += "<label> <input type='radio' name='choices' value='d'> "+chD+"</label>";
-    quiz.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+    quiz.innerHTML += "<button class='button' onclick='checkAnswer()'>Submit Answer</button>";
   }
 
   function checkAnswer(a){
