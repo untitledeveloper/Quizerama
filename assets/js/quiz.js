@@ -5,36 +5,36 @@ var quiz, status, question, choice, choices, chA, chB, chC, chD, timeId, timeIt,
 
 var questions = [
     {
-        question: "test1",
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d",
-        answer: "b"
+        question: "Commonly used data types DO NOT include:",
+        a: "strings",
+        b: "booleans",
+        c: "alerts",
+        d: "numbers",
+        answer: "c"
       },
     {
-        question: "test2",
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d",
-        answer: "b"
+        question: "The condition in an if / else statement is enclosed within ____",
+        a: "quotes",
+        b: "curly brackets",
+        c: "parantheses",
+        d: "square brackets",
+        answer: "c"
       },
     {
-        question: "test3",
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d",
-        answer: "b"
+        question: "Arrays in JavaScript can be used to store ____",
+        a: "numbers and strings",
+        b: "other arrays",
+        c: "booleans",
+        d: "all of the above",
+        answer: "d"
       },
     {
-        question: "test4",
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d",
-        answer: "b"
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        a: "JavaScript",
+        b: "terminal/bash",
+        c: "for loops",
+        d: "console log",
+        answer: "d"
       }
     ]
 
@@ -133,7 +133,7 @@ function renderQuestion(){
     quiz.innerHTML += "<label> <input type='radio' name='choices' value='b'> "+chB+"</label>";
     quiz.innerHTML += "<label> <input type='radio' name='choices' value='c'> "+chC+"</label>";
     quiz.innerHTML += "<label> <input type='radio' name='choices' value='d'> "+chD+"</label>";
-    quiz.innerHTML += "<button class='button' onclick='checkAnswer()'>Submit Answer</button>";
+    quiz.innerHTML += "<button class='button' style='display: block;' onclick='checkAnswer()'>Submit Answer</button>";
   }
 
   function checkAnswer(a){
